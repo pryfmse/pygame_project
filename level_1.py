@@ -111,12 +111,13 @@ class Hostel():
             all_sprites_list.add(wall)
 
         enemies_list = pygame.sprite.Group()
-        enemies_coord = [[120, 620, 150], [500, 150, 850], [1250, 520, 150]]
+        enemies_coord = [[120, 620, 200, 3, 'gor'], [500, 150, 850, 6, 'gor'], [1250, 520, 150, 6, 'gor'],
+                         [850, 400, 300, 6, 'gor'], [420, 700, 700, 6, 'gor'], [250, 250, 400, 6, 'vert'],
+                         [1100, 400, 300, 6, 'vert'], [1400, 600, 100, 6, 'vert']]
         for coord in enemies_coord:
-            enemy = Enemy(coord[0], coord[1], coord[2])
+            enemy = Enemy(coord[0], coord[1], coord[2], coord[3], coord[4])
             enemies_list.add(enemy)
             all_sprites_list.add(enemy)
-            print(enemy.rect.x, enemy.rect.y)
 
         player = Player(100, 690)
         player.walls = wall_list
@@ -124,20 +125,19 @@ class Hostel():
         player.enemies = enemies_list
 
         while win:
-            clock.tick(30)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     win = False
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
-                        player.change_x = -3
+                        player.change_x = -5
                     if event.key == pygame.K_RIGHT:
-                        player.change_x = 3
+                        player.change_x = 5
                     if event.key == pygame.K_UP:
-                        player.change_y = -3
+                        player.change_y = -5
                     if event.key == pygame.K_DOWN:
-                        player.change_y = 3
+                        player.change_y = 5
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
                         player.change_x = 0
