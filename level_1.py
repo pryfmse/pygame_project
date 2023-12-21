@@ -111,11 +111,24 @@ class Hostel():
             all_sprites_list.add(wall)
 
         enemies_list = pygame.sprite.Group()
-        enemies_coord = [[120, 620, 200, 3, 'gor'], [500, 150, 850, 6, 'gor'], [1250, 520, 150, 6, 'gor'],
-                         [850, 400, 300, 6, 'gor'], [420, 700, 700, 6, 'gor'], [250, 250, 400, 6, 'vert'],
-                         [1100, 400, 300, 6, 'vert'], [1400, 600, 100, 6, 'vert']]
+        enemies_coord = [[120, 620, 200, 3, 'gor', 'level_1/game_lab/enemies1_вниз.png', 'level_1/game_lab/enemies1_вверх.png',
+                          'level_1/game_lab/enemies1_влево.png', 'level_1/game_lab/enemies1_вправо.png'],
+                         [500, 150, 850, 6, 'gor', 'level_1/game_lab/enemies2_вниз.png', 'level_1/game_lab/enemies2_вверх.png',
+                          'level_1/game_lab/enemies2_влево.png', 'level_1/game_lab/enemies2_вправо.png'],
+                         [1250, 520, 150, 6, 'gor', 'level_1/game_lab/enemies3_вниз.png', 'level_1/game_lab/enemies3_вверх.png',
+                          'level_1/game_lab/enemies3_влево.png', 'level_1/game_lab/enemies3_вправо.png'],
+                         [850, 400, 300, 6, 'gor', 'level_1/game_lab/enemies4_вниз.png', 'level_1/game_lab/enemies4_вверх.png',
+                          'level_1/game_lab/enemies4_влево.png', 'level_1/game_lab/enemies4_вправо.png'],
+                         [420, 700, 700, 6, 'gor', 'level_1/game_lab/enemies5_вниз.png', 'level_1/game_lab/enemies5_вверх.png',
+                          'level_1/game_lab/enemies5_влево.png', 'level_1/game_lab/enemies5_вправо.png'],
+                         [250, 250, 400, 6, 'vert', 'level_1/game_lab/enemies6_вниз.png', 'level_1/game_lab/enemies6_вверх.png',
+                          'level_1/game_lab/enemies6_влево.png', 'level_1/game_lab/enemies6_вправо.png'],
+                         [1100, 400, 300, 3, 'vert', 'level_1/game_lab/enemies7_вниз.png', 'level_1/game_lab/enemies7_вверх.png',
+                          'level_1/game_lab/enemies7_влево.png', 'level_1/game_lab/enemies7_вправо.png'],
+                         [1400, 600, 100, 3, 'vert', 'level_1/game_lab/enemies8_вниз.png', 'level_1/game_lab/enemies8_вверх.png',
+                          'level_1/game_lab/enemies8_влево.png', 'level_1/game_lab/enemies8_вправо.png']]
         for coord in enemies_coord:
-            enemy = Enemy(coord[0], coord[1], coord[2], coord[3], coord[4])
+            enemy = Enemy(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5], coord[6], coord[7], coord[8])
             enemies_list.add(enemy)
             all_sprites_list.add(enemy)
 

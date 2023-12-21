@@ -53,38 +53,47 @@ class Wall(pygame.sprite.Sprite):
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, walk, a, orien, img='level_1/game_lab/enemies1_идетпередом.png'):
+    def __init__(self, x, y, walk, a, orien, img_down, img_up, img_left, img_right):
         super().__init__()
 
-        self.image = pygame.image.load(img).convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.img_down = img_down
+        self.img_up = img_up
+        self.img_left = img_left
+        self.img_right = img_right
         self.x = x
         self.y = y
         self.speed = a
         self.orien = orien
 
         if orien == 'gor':
+            self.image = pygame.image.load(self.img_right).convert_alpha()
             self.start = x
             self.stop = x + walk
             self.direction = 1
         else:
+            self.image = pygame.image.load(self.img_down).convert_alpha()
             self.start = y
             self.stop = y + walk
             self.direction = 1
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
     def update(self):
         if self.orien == 'gor':
             if self.rect.x > self.stop:
+                self.image = pygame.image.load(self.img_left).convert_alpha()
                 self.direction = -1
             elif self.rect.x < self.start:
+                self.image = pygame.image.load(self.img_right).convert_alpha()
                 self.direction = 1
             self.rect.x += self.direction * self.speed
         else:
             if self.rect.y > self.stop:
+                self.image = pygame.image.load(self.img_up).convert_alpha()
                 self.direction = -1
             elif self.rect.y < self.start:
+                self.image = pygame.image.load(self.img_down).convert_alpha()
                 self.direction = 1
             self.rect.y += self.direction * self.speed
 
