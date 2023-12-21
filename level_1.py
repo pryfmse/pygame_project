@@ -1,3 +1,5 @@
+import datetime
+
 import pygame
 from game_lab import Player
 from game_lab import Enemy
@@ -55,6 +57,20 @@ class Button:
                 pygame.display.update()
 
 
+class Results(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.speed = 50
+        self.image = pygame.image.load('level_1/game_lab/результаты.jpg')
+        self.rect = self.image.get_rect()
+        self.rect.x = -1000
+        self.rect.y = 200
+
+    def update(self):
+        if self.rect.x < 400:
+            self.rect.x += self.speed
+
+
 class Picture_button():
     def draw(self, x, y, message, size=30, action=None):
         mouse = pygame.mouse.get_pos()
@@ -76,6 +92,7 @@ class Picture_button():
 button_exit = Button(pygame.image.load("меню,кнопки/кнопка_овал.png"),
                      pygame.image.load("меню,кнопки/кнопкаlight_овал.png"), 'exit')
 button_choise = Picture_button()
+res = Results()
 
 
 class Hostel():
@@ -125,7 +142,7 @@ class Hostel():
                           'level_1/game_lab/enemies6_влево.png', 'level_1/game_lab/enemies6_вправо.png'],
                          [1100, 400, 300, 3, 'vert', 'level_1/game_lab/enemies7_вниз.png', 'level_1/game_lab/enemies7_вверх.png',
                           'level_1/game_lab/enemies7_влево.png', 'level_1/game_lab/enemies7_вправо.png'],
-                         [1400, 600, 100, 3, 'vert', 'level_1/game_lab/enemies8_вниз.png', 'level_1/game_lab/enemies8_вверх.png',
+                         [1400, 500, 200, 3, 'vert', 'level_1/game_lab/enemies8_вниз.png', 'level_1/game_lab/enemies8_вверх.png',
                           'level_1/game_lab/enemies8_влево.png', 'level_1/game_lab/enemies8_вправо.png']]
         for coord in enemies_coord:
             enemy = Enemy(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5], coord[6], coord[7], coord[8])
@@ -136,6 +153,10 @@ class Hostel():
         player.walls = wall_list
         all_sprites_list.add(player)
         player.enemies = enemies_list
+        game.blit(pygame.image.load("level_1/лабиринт.jpg"), (0, 0))
+        start = pygame.time.get_ticks()
+        now = []
+        end = False
 
         while win:
             for event in pygame.event.get():
@@ -162,15 +183,24 @@ class Hostel():
                         player.change_y = 0
 
             game.blit(pygame.image.load("level_1/лабиринт.jpg"), (0, 0))
-            win = button_exit.draw(750, 800, 800, 850)
 
             if player.alive:
                 all_sprites_list.update()
                 all_sprites_list.draw(game)
+                win = button_exit.draw(750, 800, 800, 850)
+                if player.rect.x > 1470 and player.rect.y > 680 and not end:
+                    now.append(pygame.time.get_ticks())
+                    all_sprites_list.empty()
+                    all_sprites_list.add(res)
+                    end = True
             else:
                 player.alive = True
                 player.rect.x = 130
                 player.rect.y = 690
+
+            if end and res.rect.x == 400:
+                print_text('Вы выиграли!', 500, 300, 60)
+                print_text(f'Время игры: {str((now[0] - start) / 1000)} сек', 500, 400)
 
             pygame.display.flip()
 
