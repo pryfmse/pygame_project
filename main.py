@@ -26,7 +26,6 @@ start = pygame.image.load("меню,кнопки/обложка.jpg")
 menu_img = pygame.image.load("меню,кнопки/меню.jpg")
 game.blit(start, (0, -80))
 print_text("Для перехода в меню нажмите любую клавишу", 450, 50)
-pygame.mouse.set_visible(False)
 pygame.display.update()
 win = True
 
@@ -44,10 +43,13 @@ class Picture_button():
                 but_sound.play()
                 if action == 1:
                     gaming1.entry(True)
+                    menu(True)
                 if action == 2:
                     gaming2.start_level(True)
+                    menu(True)
                 if action == 3:
                     gaming3.hall(True)
+                    menu(True)
         else:
             game.blit(inactive, (x, y))
             print_text(message, x + 100, y + 350)
@@ -68,11 +70,12 @@ class Button():
             pygame.display.update()
             if click[0] == 1:
                 but_sound.play()
-                pygame.quit()
+                return False
         else:
             game.blit(self.inactive, (x, y))
             print_text("ВЫХОД", x_mes, y_mes)
             pygame.display.update()
+        return True
 
 
 button_exit = Button()
@@ -83,29 +86,31 @@ gaming3 = Hotel()
 
 
 def menu(win):
+    pygame.mouse.set_visible(True)
     game.blit(menu_img, (0, -80))
     pygame.display.update()
     while win:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 win = False
-            button_exit.draw(750, 800, 800, 850)
-            picture_botton.draw(pygame.image.load("меню,кнопки/меню_коммуналка.jpg"),
-                                pygame.image.load("меню,кнопки/меню_lightкоммуналка.png"), 600, 200,
-                                "коммуналка", 2)
-            picture_botton.draw(pygame.image.load("меню,кнопки/меню_общежитие.png"),
-                                pygame.image.load("меню,кнопки/меню_lightобщежитие.png"), 100, 200, "общежитие", 1)
-            picture_botton.draw(pygame.image.load("меню,кнопки/меню_гостиница.jpg"),
-                                pygame.image.load("меню,кнопки/меню_lightгостиница.png"), 1100, 200, "гостиница", 3)
+        win = button_exit.draw(750, 800, 800, 850)
+        picture_botton.draw(pygame.image.load("меню,кнопки/меню_коммуналка.jpg"),
+                            pygame.image.load("меню,кнопки/меню_lightкоммуналка.png"), 600, 200,
+                            "коммуналка", 2)
+        picture_botton.draw(pygame.image.load("меню,кнопки/меню_общежитие.png"),
+                            pygame.image.load("меню,кнопки/меню_lightобщежитие.png"), 100, 200, "общежитие", 1)
+        picture_botton.draw(pygame.image.load("меню,кнопки/меню_гостиница.jpg"),
+                            pygame.image.load("меню,кнопки/меню_lightгостиница.png"), 1100, 200, "гостиница", 3)
 
 
 while win:
-    pygame.mouse.set_visible(True)
+    pygame.mouse.set_visible(False)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             win = False
         if event.type == pygame.KEYDOWN:
             but_sound.play()
             menu(win)
+            win = False
 
 pygame.quit()
