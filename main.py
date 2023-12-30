@@ -3,6 +3,7 @@ import pygame
 from level_2 import Communalka
 from level_1 import Hostel
 from level_3 import Hotel
+
 pygame.mixer.pre_init(44100, -16, 1, 512)
 
 pygame.init()
@@ -16,7 +17,8 @@ but_sound = pygame.mixer.Sound("меню,кнопки/кнопка.wav")
 pygame.display.set_caption('Геннадий_вход передает привет')
 
 
-def print_text(message, x, y, font_size=30, font_color=(255, 255, 255), font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
+def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
+               font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
     font_type = pygame.font.Font(font_type, font_size)
     text = font_type.render(message, True, font_color)
     game.blit(text, (x, y))
@@ -38,17 +40,19 @@ class Picture_button():
             game.blit(active, (x, y))
             print_text(message, x + 100, y + 350)
             pygame.display.update()
-            # pygame.time.delay(300)
             if click[0] == 1:
                 but_sound.play()
                 if action == 1:
                     gaming1.entry(True)
+                    pygame.time.delay(100)
                     menu(True)
                 if action == 2:
                     gaming2.start_level(True)
+                    pygame.time.delay(100)
                     menu(True)
                 if action == 3:
                     gaming3.hall(True)
+                    pygame.time.delay(100)
                     menu(True)
         else:
             game.blit(inactive, (x, y))
@@ -92,7 +96,7 @@ def menu(win):
     while win:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                win = False
+                pass
         win = button_exit.draw(750, 800, 800, 850)
         picture_botton.draw(pygame.image.load("меню,кнопки/меню_коммуналка.jpg"),
                             pygame.image.load("меню,кнопки/меню_lightкоммуналка.png"), 600, 200,
