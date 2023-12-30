@@ -382,6 +382,7 @@ class Communalka():
 
     def game_road(self, win):
         generate_level(load_level('game_road/карта.txt'))
+        fly_sound.stop()
         player = Player()
         camera = Camera()
         end = False
