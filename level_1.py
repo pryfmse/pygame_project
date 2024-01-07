@@ -1,18 +1,18 @@
-import datetime
-
 import pygame
 from game_lab import Player
 from game_lab import Enemy
 from game_lab import Wall
+
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
 
-
 game = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 but_sound = pygame.mixer.Sound("меню,кнопки/кнопка.wav")
+people_sound = pygame.mixer.Sound("level_1/шепот.wav")
 
 
-def print_text(message, x, y, font_size=30, font_color=(255, 255, 255), font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
+def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
+               font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
     font_type = pygame.font.Font(font_type, font_size)
     text = font_type.render(message, True, font_color)
     game.blit(text, (x, y))
@@ -128,22 +128,23 @@ class Hostel():
             all_sprites_list.add(wall)
 
         enemies_list = pygame.sprite.Group()
-        enemies_coord = [[120, 620, 200, 3, 'gor', 'level_1/game_lab/enemies1_вниз.png', 'level_1/game_lab/enemies1_вверх.png',
-                          'level_1/game_lab/enemies1_влево.png', 'level_1/game_lab/enemies1_вправо.png'],
-                         [500, 150, 850, 6, 'gor', 'level_1/game_lab/enemies2_вниз.png', 'level_1/game_lab/enemies2_вверх.png',
-                          'level_1/game_lab/enemies2_влево.png', 'level_1/game_lab/enemies2_вправо.png'],
-                         [1250, 520, 150, 6, 'gor', 'level_1/game_lab/enemies3_вниз.png', 'level_1/game_lab/enemies3_вверх.png',
-                          'level_1/game_lab/enemies3_влево.png', 'level_1/game_lab/enemies3_вправо.png'],
-                         [850, 400, 300, 6, 'gor', 'level_1/game_lab/enemies4_вниз.png', 'level_1/game_lab/enemies4_вверх.png',
-                          'level_1/game_lab/enemies4_влево.png', 'level_1/game_lab/enemies4_вправо.png'],
-                         [420, 700, 700, 6, 'gor', 'level_1/game_lab/enemies5_вниз.png', 'level_1/game_lab/enemies5_вверх.png',
-                          'level_1/game_lab/enemies5_влево.png', 'level_1/game_lab/enemies5_вправо.png'],
-                         [250, 250, 400, 6, 'vert', 'level_1/game_lab/enemies6_вниз.png', 'level_1/game_lab/enemies6_вверх.png',
-                          'level_1/game_lab/enemies6_влево.png', 'level_1/game_lab/enemies6_вправо.png'],
-                         [1100, 400, 300, 3, 'vert', 'level_1/game_lab/enemies7_вниз.png', 'level_1/game_lab/enemies7_вверх.png',
-                          'level_1/game_lab/enemies7_влево.png', 'level_1/game_lab/enemies7_вправо.png'],
-                         [1400, 500, 200, 3, 'vert', 'level_1/game_lab/enemies8_вниз.png', 'level_1/game_lab/enemies8_вверх.png',
-                          'level_1/game_lab/enemies8_влево.png', 'level_1/game_lab/enemies8_вправо.png']]
+        enemies_coord = [
+            [120, 620, 200, 3, 'gor', 'level_1/game_lab/enemies1_вниз.png', 'level_1/game_lab/enemies1_вверх.png',
+             'level_1/game_lab/enemies1_влево.png', 'level_1/game_lab/enemies1_вправо.png'],
+            [500, 150, 850, 6, 'gor', 'level_1/game_lab/enemies2_вниз.png', 'level_1/game_lab/enemies2_вверх.png',
+             'level_1/game_lab/enemies2_влево.png', 'level_1/game_lab/enemies2_вправо.png'],
+            [1250, 520, 150, 6, 'gor', 'level_1/game_lab/enemies3_вниз.png', 'level_1/game_lab/enemies3_вверх.png',
+             'level_1/game_lab/enemies3_влево.png', 'level_1/game_lab/enemies3_вправо.png'],
+            [850, 400, 300, 6, 'gor', 'level_1/game_lab/enemies4_вниз.png', 'level_1/game_lab/enemies4_вверх.png',
+             'level_1/game_lab/enemies4_влево.png', 'level_1/game_lab/enemies4_вправо.png'],
+            [420, 700, 700, 6, 'gor', 'level_1/game_lab/enemies5_вниз.png', 'level_1/game_lab/enemies5_вверх.png',
+             'level_1/game_lab/enemies5_влево.png', 'level_1/game_lab/enemies5_вправо.png'],
+            [250, 250, 400, 6, 'vert', 'level_1/game_lab/enemies6_вниз.png', 'level_1/game_lab/enemies6_вверх.png',
+             'level_1/game_lab/enemies6_влево.png', 'level_1/game_lab/enemies6_вправо.png'],
+            [1100, 400, 300, 3, 'vert', 'level_1/game_lab/enemies7_вниз.png', 'level_1/game_lab/enemies7_вверх.png',
+             'level_1/game_lab/enemies7_влево.png', 'level_1/game_lab/enemies7_вправо.png'],
+            [1400, 500, 200, 3, 'vert', 'level_1/game_lab/enemies8_вниз.png', 'level_1/game_lab/enemies8_вверх.png',
+             'level_1/game_lab/enemies8_влево.png', 'level_1/game_lab/enemies8_вправо.png']]
         for coord in enemies_coord:
             enemy = Enemy(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5], coord[6], coord[7], coord[8])
             enemies_list.add(enemy)
@@ -204,38 +205,98 @@ class Hostel():
 
             pygame.display.flip()
 
+    def paper(self, win):
+        while win:
+            for _ in pygame.event.get():
+                win = button_exit.draw(750, 800, 800, 850)
+            game.blit(pygame.image.load("level_1/в_руках.png"), (0, 0))
+            print_text('Нужно бежать отсюда!', 300, 700)
+            mouse = pygame.mouse.get_pos()
+            click = pygame.mouse.get_pressed()
+            pygame.mouse.set_visible(False)
+            game.blit(pygame.image.load("level_1/курсор.png"), mouse)
+            if click[0] == 1:
+                pygame.mouse.set_visible(True)
+                self.game_lab(True)
+                win = False
+            pygame.display.update()
+
     def basement(self, win):
-        game.blit(pygame.image.load("level_1/подвал.jpg"), (0, 0))
-        pygame.display.update()
         while win:
             for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    win = False
+            game.blit(pygame.image.load("level_1/подвал.jpg"), (0, 0))
+            win = button_exit.draw(750, 800, 800, 850)
+            print_text('Ого сколько тут бумаг', 300, 700)
+            mouse = pygame.mouse.get_pos()
+            click = pygame.mouse.get_pressed()
+            if 600 < mouse[1] < 800:
+                pygame.mouse.set_visible(False)
+                game.blit(pygame.image.load("level_1/курсор.png"), mouse)
+                if click[0] == 1:
+                    pygame.mouse.set_visible(True)
+                    self.paper(True)
+                    win = False
+            else:
+                pygame.mouse.set_visible(True)
+            pygame.display.update()
+
+    def to_basement2(self, win):
+        while win:
+            for event in pygame.event.get():
+                game.blit(pygame.image.load("level_1/у подвала.png"), (0, 0))
                 win = button_exit.draw(750, 800, 800, 850)
                 if event.type == pygame.QUIT:
                     win = False
-                print_text('Привет. Ты первокурсник?', 100, 650)
-                print_text('Меня Коля зовут, будем знакомы. Провести тебе экскурсию?', 300, 700)
+                print_text('Откуда звуки?', 300, 700)
+                mouse = pygame.mouse.get_pos()
+                click = pygame.mouse.get_pressed()
+                if 750 < mouse[0] < 900 and 600 < mouse[1] < 700:
+                    pygame.mouse.set_visible(False)
+                    game.blit(pygame.image.load("level_1/курсор.png"), mouse)
+                    if click[0] == 1:
+                        pygame.mouse.set_visible(True)
+                        self.basement(True)
+                        win = False
+                else:
+                    pygame.mouse.set_visible(True)
+
                 pygame.display.update()
-                a = button_choise.draw(1000, 750, "Давай", 60, 'kitchen')
-                if a:
-                    self.kitchen_our(True)
-                    win = False
 
     def room2(self, win):
-        game.blit(pygame.image.load("level_1/комната.png"), (0, 0))
-        game.blit(pygame.image.load("level_1/сосед.png"), (0, 180))
-        pygame.display.update()
+        a = "level_1/комната_вещи.png"
+        text = 'Нужно разложить вещи'
+        flag = False
+        but = False
         while win:
             for event in pygame.event.get():
-                win = button_exit.draw(750, 800, 800, 850)
                 if event.type == pygame.QUIT:
                     win = False
-                print_text('Привет. Ты первокурсник? Меня Коля зовут, ', 600, 650)
-                print_text('будем знакомы. Провести тебе экскурсию?', 650, 700)
-                pygame.display.update()
-                a = button_choise.draw(1100, 730, "Давай", 60, 'kitchen')
-                if a:
-                    self.kitchen_our(True)
+                game.blit(pygame.image.load(a), (0, 0))
+                win = button_exit.draw(750, 800, 800, 850)
+                print_text(text, 650, 700)
+                mouse = pygame.mouse.get_pos()
+                click = pygame.mouse.get_pressed()
+                if 1350 < mouse[0] < 1600 and 600 < mouse[1] < 750 and not flag:
+                    game.blit(pygame.image.load("level_1/курсор.png"), mouse)
+                    pygame.mouse.set_visible(False)
+                    if click[0] == 1:
+                        text = 'Что это за звуки?'
+                        a = "level_1/комната.png"
+                        people_sound.play()
+                        flag = True
+                else:
+                    pygame.mouse.set_visible(True)
+
+                if flag:
+                    but = button_choise.draw(1000, 750, "В коридор", 60, 'ok')
+
+                if but:
+                    self.to_basement2(True)
                     win = False
+
+                pygame.display.update()
 
     def to_basement(self, win):
         game.blit(pygame.image.load("level_1/у подвала.png"), (0, 0))
@@ -251,24 +312,18 @@ class Hostel():
                 pygame.display.update()
                 a = button_choise.draw(1000, 750, "Почему?", 60, 'kitchen')
                 if a:
-                    self.game_lab(True)
-                    win = False
-                    # for i in ["level_1/с1.png", "level_1/с2.png", "level_1/с3.png"]:
-                    #     game.blit(pygame.image.load("level_1/у подвала.png"), (0, 0))
-                    #     game.blit(pygame.image.load(i), (0, 180))
-                    #     print_text('Не задавай лишних вопросов', 800, 700)
-                    #     pygame.display.update()
-                    #     pygame.time.delay(100)
-                    # pygame.time.delay(400)
-                    # b = button_choise.draw(1000, 750, "Не буду", 60, 'kitchen')
-                    # if b:
-                    #     print_text('Вот и славно. Пойдем назад', 800, 700)
-                    #     pygame.display.update()
-                    #     c = button_choise.draw(1000, 750, "Пойдем", 60, 'kitchen')
-                    #     if c:
-                    #         self.room2(True)
-                    #         win = False
-
+                    print_text('Не задавай лишних вопросов', 800, 700)
+                    pygame.display.update()
+                    pygame.time.delay(100)
+                    pygame.time.delay(400)
+                    b = button_choise.draw(1000, 750, "Не буду", 60, 'kitchen')
+                    if b:
+                        print_text('Вот и славно. Пойдем назад', 800, 700)
+                        pygame.display.update()
+                        c = button_choise.draw(1000, 750, "Пойдем", 60, 'kitchen')
+                        if c:
+                            self.room2(True)
+                            win = False
 
     def kitchen_our(self, win):
         game.blit(pygame.image.load("level_1/кухня.jpg"), (0, 0))
@@ -330,7 +385,7 @@ class Hostel():
                 pygame.display.update()
                 a = button_choise.draw(300, 750, "Подняться", 50, 'hallway')
                 if a:
-                    self.game_lab(True)
+                    self.hallway(True)
                     win = False
         game.blit(pygame.image.load("меню,кнопки/меню.jpg"), (0, -80))
         pygame.display.update()
