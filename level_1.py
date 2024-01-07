@@ -299,31 +299,42 @@ class Hostel():
                 pygame.display.update()
 
     def to_basement(self, win):
-        game.blit(pygame.image.load("level_1/у подвала.png"), (0, 0))
-        game.blit(pygame.image.load("level_1/сосед.png"), (0, 180))
-        pygame.display.update()
         while win:
             for event in pygame.event.get():
-                win = button_exit.draw(750, 800, 800, 850)
                 if event.type == pygame.QUIT:
                     win = False
+                game.blit(pygame.image.load("level_1/у подвала.png"), (0, 0))
+                game.blit(pygame.image.load("level_1/сосед.png"), (0, 180))
                 print_text('Видишь у окна спуск в подвал?', 600, 650)
                 print_text('Лучше тебе туда не соваться', 650, 700)
-                pygame.display.update()
                 a = button_choise.draw(1000, 750, "Почему?", 60, 'kitchen')
+                win = button_exit.draw(750, 800, 800, 850)
+                pygame.display.update()
                 if a:
-                    print_text('Не задавай лишних вопросов', 800, 700)
-                    pygame.display.update()
-                    pygame.time.delay(100)
-                    pygame.time.delay(400)
-                    b = button_choise.draw(1000, 750, "Не буду", 60, 'kitchen')
-                    if b:
-                        print_text('Вот и славно. Пойдем назад', 800, 700)
+                    while win:
+                        game.blit(pygame.image.load("level_1/у подвала.png"), (0, 0))
+                        game.blit(pygame.image.load("level_1/сосед.png"), (0, 180))
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                win = False
+                        win = button_exit.draw(750, 800, 800, 850)
+                        print_text('Не задавай лишних вопросов', 800, 700)
+                        b = button_choise.draw(1000, 750, "Не буду", 60, 'kitchen')
                         pygame.display.update()
-                        c = button_choise.draw(1000, 750, "Пойдем", 60, 'kitchen')
-                        if c:
-                            self.room2(True)
-                            win = False
+                        if b:
+                            while win:
+                                game.blit(pygame.image.load("level_1/у подвала.png"), (0, 0))
+                                game.blit(pygame.image.load("level_1/сосед.png"), (0, 180))
+                                for event in pygame.event.get():
+                                    if event.type == pygame.QUIT:
+                                        win = False
+                                win = button_exit.draw(750, 800, 800, 850)
+                                print_text('Вот и славно. Пойдем назад', 800, 700)
+                                c = button_choise.draw(1000, 750, "Пойдем", 60, 'kitchen')
+                                pygame.display.update()
+                                if c:
+                                    self.room2(True)
+                                    win = False
 
     def kitchen_our(self, win):
         game.blit(pygame.image.load("level_1/кухня.jpg"), (0, 0))
