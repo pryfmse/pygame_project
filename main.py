@@ -51,7 +51,7 @@ class Picture_button():
                     pygame.time.delay(100)
                     menu(True)
                 if action == 3:
-                    gaming3.hall(True)
+                    gaming3.game_child(True)
                     pygame.time.delay(100)
                     menu(True)
         else:
