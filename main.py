@@ -1,4 +1,5 @@
 import pygame
+from screeninfo import get_monitors
 
 from level_2 import Communalka  # импортировать классы уровней
 from level_1 import Hostel
@@ -6,11 +7,18 @@ from level_3 import Hotel
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
 
+for m in get_monitors():  # получить параметры экрана
+    replace_x = m.width / 1600
+    replace_y = m.height / 900
+
+# New width and height will be (50, 30).
+start = pygame.transform.scale(pygame.image.load("меню,кнопки/обложка.jpg"), (1600 * replace_x, 1100 * replace_y))
+
 pygame.init()
 pygame.mixer.music.load("меню,кнопки/фоновая.mp3")
 pygame.mixer.music.play(-1)
 pygame.mixer.music.set_volume(0.5)
-game = pygame.display.set_mode((1600, 900))
+game = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 but_sound = pygame.mixer.Sound("меню,кнопки/кнопка.wav")
 
@@ -25,10 +33,8 @@ def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
     game.blit(text, (x, y))
 
 
-menu_img = pygame.image.load("меню,кнопки/меню.jpg")
-start = pygame.image.load("меню,кнопки/обложка.jpg")
-game.blit(start, (0, -80))
-print_text("Для перехода в меню нажмите любую клавишу", 450, 50)
+game.blit(start, (0, -80 * replace_y))
+print_text("Для перехода в меню нажмите любую клавишу", 450 * replace_x, 50 * replace_y)
 pygame.display.update()
 win = True
 
@@ -92,14 +98,16 @@ gaming3 = Hotel()
 
 def menu(win):  # функция меню
     pygame.mouse.set_visible(True)
-    game.blit(menu_img, (0, -80))
+    game.blit((pygame.transform.scale(pygame.image.load("меню,кнопки/меню.jpg"),
+                                      (1600 * replace_x, 1100 * replace_y))), (0, -80 * replace_x))
     pygame.display.update()
     while win:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pass
         win = button_exit.draw(750, 800, 800, 850)
-        picture_botton.draw(pygame.image.load("меню,кнопки/меню_коммуналка.jpg"),
+        picture_botton.draw(pygame.transform.scale(pygame.image.load("меню,кнопки/меню_коммуналка.jpg"),
+                                                    (400 * replace_x, 400 * replace_y)),
                             pygame.image.load("меню,кнопки/меню_lightкоммуналка.png"), 600, 200,
                             "коммуналка", 2)
         picture_botton.draw(pygame.image.load("меню,кнопки/меню_общежитие.png"),
