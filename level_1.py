@@ -11,6 +11,7 @@ but_sound = pygame.mixer.Sound("меню,кнопки/кнопка.wav")
 people_sound = pygame.mixer.Sound("level_1/шепот.wav")
 
 
+# функция печати текста на экране
 def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
                font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
     font_type = pygame.font.Font(font_type, font_size)
@@ -18,7 +19,7 @@ def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
     game.blit(text, (x, y))
 
 
-class Button:
+class Button:  # класс кнопки выхода
     def __init__(self, inactive, active, mess=None):
         self.inactive = inactive
         self.active = active
@@ -57,7 +58,7 @@ class Button:
                 pygame.display.update()
 
 
-class Results(pygame.sprite.Sprite):
+class Results(pygame.sprite.Sprite):  # класс вывода результатов в конце мини-игры
     def __init__(self):
         super().__init__()
         self.speed = 50
@@ -71,7 +72,7 @@ class Results(pygame.sprite.Sprite):
             self.rect.x += self.speed
 
 
-class Picture_button():
+class Picture_button():  # класс кнопки с изображением
     def draw(self, x, y, message, size=30, action=None):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -95,8 +96,8 @@ button_choise = Picture_button()
 res = Results()
 
 
-class Hostel():
-    def game_lab(self, win=True):
+class Hostel():  # главный класс первого уровня
+    def game_lab(self, win=True):  # мини-игра "лабиринт"
         game.blit(pygame.image.load("level_1/лабиринт.jpg"), (0, 0))
         game.fill((0, 0, 0))
         FPS = 60
@@ -205,7 +206,7 @@ class Hostel():
 
             pygame.display.flip()
 
-    def paper(self, win):
+    def paper(self, win):  # читает то, что написано на клочке бумаги
         while win:
             for _ in pygame.event.get():
                 win = button_exit.draw(750, 800, 800, 850)
@@ -221,7 +222,7 @@ class Hostel():
                 win = False
             pygame.display.update()
 
-    def basement(self, win):
+    def basement(self, win):  # в подвале
         while win:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -242,7 +243,7 @@ class Hostel():
                 pygame.mouse.set_visible(True)
             pygame.display.update()
 
-    def to_basement2(self, win):
+    def to_basement2(self, win):  # второй раз у спуска в подвал
         while win:
             for event in pygame.event.get():
                 game.blit(pygame.image.load("level_1/у подвала.png"), (0, 0))
@@ -264,13 +265,13 @@ class Hostel():
 
                 pygame.display.update()
 
-    def room2(self, win):
+    def room2(self, win):  # второй раз в комнате
         a = "level_1/комната_вещи.png"
         text = 'Нужно разложить вещи'
         flag = False
         but = False
         while win:
-            for event in pygame.event.get():
+            for event in pygame.event.get():  # отслеживание нажатий игрока
                 if event.type == pygame.QUIT:
                     win = False
                 game.blit(pygame.image.load(a), (0, 0))
@@ -298,7 +299,7 @@ class Hostel():
 
                 pygame.display.update()
 
-    def to_basement(self, win):
+    def to_basement(self, win):  # действия у спуска в подвал
         while win:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -319,7 +320,7 @@ class Hostel():
                                 win = False
                         win = button_exit.draw(750, 800, 800, 850)
                         print_text('Не задавай лишних вопросов', 800, 700)
-                        b = button_choise.draw(1000, 750, "Не буду", 60, 'kitchen')
+                        b = button_choise.draw(300, 750, "Не буду", 60, 'kitchen')
                         pygame.display.update()
                         if b:
                             while win:
@@ -336,7 +337,7 @@ class Hostel():
                                     self.room2(True)
                                     win = False
 
-    def kitchen_our(self, win):
+    def kitchen_our(self, win):  # кухня
         game.blit(pygame.image.load("level_1/кухня.jpg"), (0, 0))
         game.blit(pygame.image.load("level_1/сосед.png"), (0, 180))
         while win:
@@ -352,7 +353,7 @@ class Hostel():
                     self.to_basement(True)
                     win = False
 
-    def room(self, win):
+    def room(self, win):  # комната игрока
         game.blit(pygame.image.load("level_1/комната.png"), (0, 0))
         game.blit(pygame.image.load("level_1/сосед.png"), (0, 180))
         pygame.display.update()
@@ -369,7 +370,7 @@ class Hostel():
                     self.kitchen_our(True)
                     win = False
 
-    def hallway(self, win):
+    def hallway(self, win):  # коридор
         game.blit(pygame.image.load("level_1/коридор.png"), (0, 0))
         pygame.display.update()
         while win:
@@ -384,7 +385,7 @@ class Hostel():
                     self.room(True)
                     win = False
 
-    def entry(self, win):
+    def entry(self, win):  # вход в общежитие
         game.blit(pygame.image.load("level_1/начало.png"), (0, 0))
         pygame.display.update()
         while win:

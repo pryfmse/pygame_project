@@ -11,6 +11,7 @@ scared_sound = pygame.mixer.Sound("level_3/испуг.wav")
 people_sound = pygame.mixer.Sound("level_3/кто-то.wav")
 
 
+# функция для печати текста на экране
 def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
                font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
     font_type = pygame.font.Font(font_type, font_size)
@@ -18,7 +19,7 @@ def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
     game.blit(text, (x, y))
 
 
-class Button:
+class Button:  # класс кнопки выхода
     def __init__(self):
         self.inactive = pygame.image.load("меню,кнопки/кнопка_овал.png")
         self.active = pygame.image.load("меню,кнопки/кнопкаlight_овал.png")
@@ -40,7 +41,7 @@ class Button:
         return True
 
 
-class Picture_button():
+class Picture_button():  # класс кнопки с изображением
     def draw(self, x, y, message, size=30, action=None):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -65,8 +66,8 @@ barrier_group = pygame.sprite.Group()
 wall_group = pygame.sprite.Group()
 
 
-class Hotel():
-    def end(self, win):
+class Hotel():  # главный класс уровня
+    def end(self, win):  # события, оканчивающие уровень
         people_sound.play()
         while win:
             game.blit(pygame.image.load("level_3/подвал2.png"), (0, 0))
@@ -80,7 +81,7 @@ class Hotel():
             pygame.time.delay(1000)
             win = False
 
-    def basement(self, win):
+    def basement(self, win):  # подвал
         scared_sound.play()
         while win:
             for event in pygame.event.get():
@@ -100,7 +101,7 @@ class Hotel():
 
             pygame.display.update()
 
-    def game_child(self, win):
+    def game_child(self, win):  # мини-игра "погоня"
         game.blit(pygame.image.load("level_3/game_child/bg.png"), (0, 0))
         game.blit(pygame.image.load("level_3/game_child/bg2.png"), (0, 100))
         FPS = 30
@@ -117,7 +118,7 @@ class Hotel():
         fl = Wall(1210, 242, "level_3/game_child/3.png")
         wall_group.add(grass)
         all_sprites.add(fl)
-        player = Player(100, 650, wall_group)
+        player = Player(100, 690, wall_group)
         all_sprites.add(player)
 
         pygame.time.get_ticks()
@@ -164,7 +165,7 @@ class Hotel():
             pygame.display.flip()
             clock.tick(FPS)
 
-    def hall3(self, win):
+    def hall3(self, win):  # третий раз в коридоре
         while win:
             while win:
                 for event in pygame.event.get():
@@ -187,7 +188,7 @@ class Hotel():
 
                 pygame.display.update()
 
-    def computer2(self, win):
+    def computer2(self, win):  # другой экран компьютера
         text = 'Что это значит? Меня тут кто-то ждал?'
         ok = False
         while win:
@@ -216,7 +217,7 @@ class Hotel():
 
             pygame.display.update()
 
-    def computer(self, win):
+    def computer(self, win):  # экран компьютера
         pygame.mouse.set_visible(True)
         while win:
             for event in pygame.event.get():
@@ -240,7 +241,7 @@ class Hotel():
 
             pygame.display.update()
 
-    def hall2(self, win):
+    def hall2(self, win):  # второй раз в коридоре
         while win:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -262,7 +263,7 @@ class Hotel():
 
             pygame.display.update()
 
-    def number(self, win):
+    def number(self, win):  # в номере
         game.blit(pygame.image.load("level_3/номерр.jpg"), (0, 0))
         while win:
             for event in pygame.event.get():
@@ -275,7 +276,7 @@ class Hotel():
                 self.hall2(True)
                 win = False
 
-    def number_gg(self, win):
+    def number_gg(self, win):  # в номере
         game.blit(pygame.image.load("level_3/номер.jpg"), (0, 0))
         while win:
             for event in pygame.event.get():
@@ -289,7 +290,7 @@ class Hotel():
                 self.number(True)
                 win = False
 
-    def hall(self, win):
+    def hall(self, win):  # в коридоре
         while win:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

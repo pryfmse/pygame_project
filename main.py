@@ -1,10 +1,14 @@
 import pygame
+from screeninfo import get_monitors
 
-from level_2 import Communalka
+from level_2 import Communalka  # импортировать классы уровней
 from level_1 import Hostel
 from level_3 import Hotel
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
+
+for m in get_monitors():  # получить параметры экрана
+    print(m.width, m.height)
 
 pygame.init()
 pygame.mixer.music.load("меню,кнопки/фоновая.mp3")
@@ -17,6 +21,7 @@ but_sound = pygame.mixer.Sound("меню,кнопки/кнопка.wav")
 pygame.display.set_caption('Геннадий_вход передает привет')
 
 
+# функция, печатающая текст на экране
 def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
                font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
     font_type = pygame.font.Font(font_type, font_size)
@@ -32,7 +37,7 @@ pygame.display.update()
 win = True
 
 
-class Picture_button():
+class Picture_button():  # класс кнопок с изображением
     def draw(self, inactive, active, x, y, message, action):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -60,7 +65,7 @@ class Picture_button():
             pygame.display.update()
 
 
-class Button():
+class Button():  # класс кнопки выхода
     def __init__(self):
         self.inactive = pygame.image.load("меню,кнопки/кнопка_овал.png")
         self.active = pygame.image.load("меню,кнопки/кнопкаlight_овал.png")
@@ -89,7 +94,7 @@ gaming2 = Communalka()
 gaming3 = Hotel()
 
 
-def menu(win):
+def menu(win):  # функция меню
     pygame.mouse.set_visible(True)
     game.blit(menu_img, (0, -80))
     pygame.display.update()
@@ -107,7 +112,7 @@ def menu(win):
                             pygame.image.load("меню,кнопки/меню_lightгостиница.png"), 1100, 200, "гостиница", 3)
 
 
-while win:
+while win:  # приветственный экран
     pygame.mouse.set_visible(False)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

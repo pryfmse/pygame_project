@@ -17,6 +17,7 @@ door_sound_no = pygame.mixer.Sound("level_2/не-а.wav")
 fly_sound = pygame.mixer.Sound("level_2/мухи.wav")
 
 
+# печать текста на экране
 def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
                font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
     font_type = pygame.font.Font(font_type, font_size)
@@ -24,7 +25,7 @@ def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
     game.blit(text, (x, y))
 
 
-class Button():
+class Button():  # класс кнопки выхода
     def __init__(self):
         self.inactive = pygame.image.load("меню,кнопки/кнопка_овал.png")
         self.active = pygame.image.load("меню,кнопки/кнопкаlight_овал.png")
@@ -46,7 +47,7 @@ class Button():
         return True
 
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):  # класс игрока в мини-игре "побег"
     def __init__(self):
         super().__init__(player_group, all_sprites)
         self.img = ['level_2/game_road/player_1.png', 'level_2/game_road/player_3.png']
@@ -62,7 +63,7 @@ class Player(pygame.sprite.Sprite):
             self.alive = False
 
 
-class Picture_button():
+class Picture_button():  # класс кнопки с изображением
     def __init__(self, active="меню,кнопки/кнопкаlight_прямоугольник.png",
                  inactive="меню,кнопки/кнопка_прямоугольник.png", area=400):
         self.active = active
@@ -86,7 +87,7 @@ class Picture_button():
         return False
 
 
-class Camera:
+class Camera:  # класс камеры в мини-игре "лабиринт"
     # зададим начальный сдвиг камеры
     def __init__(self):
         self.dy = 0
@@ -100,7 +101,7 @@ class Camera:
         self.dy = -(target.rect.y + target.rect.h // 2 - 1500 // 2)
 
 
-class Tile(pygame.sprite.Sprite):
+class Tile(pygame.sprite.Sprite):  # класс блоков в мини-игре "побег"
     def __init__(self, tile_type, pos_x, pos_y):
         if tile_type != 'barrier' and tile_type != 'water':
             super().__init__(tiles_group, all_sprites)
@@ -111,7 +112,7 @@ class Tile(pygame.sprite.Sprite):
             240 * pos_x, 150 * pos_y)
 
 
-class Enemy(pygame.sprite.Sprite):
+class Enemy(pygame.sprite.Sprite):  # класс врагов в мини-игре "побег"
     def __init__(self, type_e, pos_x, pos_y, t, speed):
         super().__init__(enemy_sprites, all_sprites)
         self.coll = []
@@ -146,7 +147,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.x = -30
 
 
-class Results(pygame.sprite.Sprite):
+class Results(pygame.sprite.Sprite):  # класс выведения результатов в мини-игре "побег"
     def __init__(self):
         super().__init__()
         self.speed = 100
@@ -160,7 +161,7 @@ class Results(pygame.sprite.Sprite):
             self.rect.x += self.speed
 
 
-def load_image(name, color_key=None):
+def load_image(name, color_key=None):  # чтение карты уровня из файла txt
     fullname = os.path.join('level_2', name)
     try:
         image = pygame.image.load(fullname).convert_alpha()
@@ -177,7 +178,7 @@ def load_image(name, color_key=None):
     return image
 
 
-def load_level(filename):
+def load_level(filename):  # чтение уровня
     filename = "level_2/" + filename
     # читаем уровень, убирая символы перевода строки
     with open(filename, 'r') as mapFile:
@@ -190,7 +191,7 @@ def load_level(filename):
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
 
-def generate_level(level):
+def generate_level(level):  # генерация уровня
     for y in range(len(level) - 1, -1, -1):
         for x in range(len(level[y]) - 1, -1, -1):
             if level[y][x] == '"':
@@ -244,8 +245,8 @@ en_image = {
 }
 
 
-class Communalka():
-    def game_sheep(self, win):
+class Communalka():  # главный класс второго уровня
+    def game_sheep(self, win):  # мини-игра "овечки"
         field = [
             ['0', '5', '0', '0', ' '],
             ['0', '2', '9', '0', '0'],
@@ -380,7 +381,7 @@ class Communalka():
 
             pygame.display.flip()
 
-    def game_road(self, win):
+    def game_road(self, win):  # мини-игра "побег"
         generate_level(load_level('game_road/карта.txt'))
         fly_sound.stop()
         player = Player()
@@ -456,7 +457,7 @@ class Communalka():
                 print_text(f'Время игры: {str((now - start) / 1000)} сек', 500, 400)
             pygame.display.flip()
 
-    def room(self, win):
+    def room(self, win):  # комната Геннадия
         game.blit(pygame.image.load("level_2/комната_Геннадия_1.jpg.png"), (0, 0))
         fly_sound.play()
         while win:

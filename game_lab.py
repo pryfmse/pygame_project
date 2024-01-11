@@ -1,7 +1,7 @@
 import pygame
 
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):  # класс игрока
     def __init__(self, x, y, img='level_1/game_lab/player_стоитпередом.png'):
         super().__init__()
 
@@ -40,7 +40,7 @@ class Player(pygame.sprite.Sprite):
             self.alive = False
 
 
-class Wall(pygame.sprite.Sprite):
+class Wall(pygame.sprite.Sprite):  # класс стен
     def __init__(self, x, y, width, height):
         super().__init__()
 
@@ -52,7 +52,7 @@ class Wall(pygame.sprite.Sprite):
         self.rect.y = y
 
 
-class Enemy(pygame.sprite.Sprite):
+class Enemy(pygame.sprite.Sprite):  # класс врагов
     def __init__(self, x, y, walk, a, orien, img_down, img_up, img_left, img_right):
         super().__init__()
 
