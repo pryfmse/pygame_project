@@ -51,15 +51,15 @@ class Picture_button():  # класс кнопок с изображением
                 but_sound.play()
                 if action == 1:
                     gaming1.entry(True)
-                    pygame.time.delay(100)
+                    pygame.time.delay(300)
                     menu(True)
                 if action == 2:
                     gaming2.start_level(True)
-                    pygame.time.delay(100)
+                    pygame.time.delay(300)
                     menu(True)
                 if action == 3:
                     gaming3.game_child(True)
-                    pygame.time.delay(100)
+                    pygame.time.delay(300)
                     menu(True)
         else:
             game.blit(inactive, (x, y))
