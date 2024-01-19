@@ -202,6 +202,8 @@ class Hostel():
             if end and res.rect.x == 400:
                 print_text('Вы выиграли!', 500, 300, 60)
                 print_text(f'Время игры: {str((now[0] - start) / 1000)} сек', 500, 400)
+                with open("results.txt", "a") as myfile:
+                    myfile.write(f"Player 1 - {str((now[0] - start) / 1000)}\n")
 
             pygame.display.flip()
 
