@@ -1,4 +1,5 @@
 import pygame
+from game_child import Player, Wall, Camera, Fire
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
@@ -10,6 +11,7 @@ scared_sound = pygame.mixer.Sound("level_3/испуг.wav")
 people_sound = pygame.mixer.Sound("level_3/кто-то.wav")
 
 
+# функция для печати текста на экране
 def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
                font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
     font_type = pygame.font.Font(font_type, font_size)
@@ -17,7 +19,7 @@ def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
     game.blit(text, (x, y))
 
 
-class Button:
+class Button:  # класс кнопки выхода
     def __init__(self):
         self.inactive = pygame.image.load("меню,кнопки/кнопка_овал.png")
         self.active = pygame.image.load("меню,кнопки/кнопкаlight_овал.png")
@@ -39,7 +41,7 @@ class Button:
         return True
 
 
-class Picture_button():
+class Picture_button():  # класс кнопки с изображением
     def draw(self, x, y, message, size=30, action=None):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -64,8 +66,8 @@ barrier_group = pygame.sprite.Group()
 wall_group = pygame.sprite.Group()
 
 
-class Hotel():
-    def end(self, win):
+class Hotel():  # главный класс уровня
+    def end(self, win):  # события, оканчивающие уровень
         people_sound.play()
         while win:
             game.blit(pygame.image.load("level_3/подвал2.png"), (0, 0))
@@ -79,7 +81,7 @@ class Hotel():
             pygame.time.delay(1000)
             win = False
 
-    def basement(self, win):
+    def basement(self, win):  # подвал
         scared_sound.play()
         while win:
             for event in pygame.event.get():
@@ -99,7 +101,72 @@ class Hotel():
 
             pygame.display.update()
 
-    def hall3(self, win):
+    def game_child(self, win):  # мини-игра "погоня"
+        game.blit(pygame.image.load("level_3/game_child/bg.png"), (0, 0))
+        game.blit(pygame.image.load("level_3/game_child/bg2.png"), (0, 100))
+        FPS = 30
+        clock = pygame.time.Clock()
+        pygame.display.update()
+
+        grass = Wall(820, 350, "level_3/game_child/2_трава.png")
+        wall_group.add(grass)
+        camera = Camera()
+        all_sprites.add(grass)
+        fl = Wall(-350, 684, "level_3/game_child/1.1.png")
+        # fl = Wall(-350, 350, "level_3/game_childe_child/1.2.png")
+        wall_group.add(fl)
+        all_sprites.add(fl)
+        fl = Wall(1210, 242, "level_3/game_child/3.png")
+        wall_group.add(grass)
+        all_sprites.add(fl)
+        player = Player(100, 690, wall_group)
+        all_sprites.add(player)
+
+        pygame.time.get_ticks()
+
+        while win:
+            game.blit(pygame.image.load("level_3/game_child/bg.png"), (0, 0))
+            game.blit(pygame.image.load("level_3/game_child/bg2.png"), (0, 100))
+
+            print_text(f'{(60000 - pygame.time.get_ticks()) / 1000}', 20, 20)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    win = False
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        player.change_x = -30
+                    if event.key == pygame.K_RIGHT:
+                        player.change_x = 30
+                    if event.key == pygame.K_UP:
+                        player.change_y = -30
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT:
+                        player.change_x = 0
+                    if event.key == pygame.K_RIGHT:
+                        player.change_x = 0
+                    if event.key == pygame.K_UP:
+                        player.change_y = 0
+
+            if player.alive:
+                # изменяем ракурс камеры
+                camera.update(player)
+                # обновляем положение всех спрайтов
+                for sprite in all_sprites:
+                    camera.apply(sprite)
+                all_sprites.update()
+                all_sprites.draw(game)
+            else:
+                player.alive = True
+                player.rect.x = 130
+                player.rect.y = 690
+
+            win = button_exit.draw(750, 800, 800, 850)
+
+            pygame.display.flip()
+            clock.tick(FPS)
+
+    def hall3(self, win):  # третий раз в коридоре
         while win:
             while win:
                 for event in pygame.event.get():
@@ -122,7 +189,7 @@ class Hotel():
 
                 pygame.display.update()
 
-    def computer2(self, win):
+    def computer2(self, win):  # другой экран компьютера
         text = 'Что это значит? Меня тут кто-то ждал?'
         ok = False
         while win:
@@ -151,7 +218,7 @@ class Hotel():
 
             pygame.display.update()
 
-    def computer(self, win):
+    def computer(self, win):  # экран компьютера
         pygame.mouse.set_visible(True)
         while win:
             for event in pygame.event.get():
@@ -175,7 +242,7 @@ class Hotel():
 
             pygame.display.update()
 
-    def hall2(self, win):
+    def hall2(self, win):  # второй раз в коридоре
         while win:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -197,7 +264,7 @@ class Hotel():
 
             pygame.display.update()
 
-    def number(self, win):
+    def number(self, win):  # в номере
         game.blit(pygame.image.load("level_3/номерр.jpg"), (0, 0))
         while win:
             for event in pygame.event.get():
@@ -210,7 +277,7 @@ class Hotel():
                 self.hall2(True)
                 win = False
 
-    def number_gg(self, win):
+    def number_gg(self, win):  # в номере
         game.blit(pygame.image.load("level_3/номер.jpg"), (0, 0))
         while win:
             for event in pygame.event.get():
@@ -224,7 +291,7 @@ class Hotel():
                 self.number(True)
                 win = False
 
-    def hall(self, win):
+    def hall(self, win):  # в коридоре
         while win:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

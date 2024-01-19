@@ -1,7 +1,7 @@
 import pygame
 
 
-class Player(pygame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):  # класс игрока
     def __init__(self, x, y, wall=pygame.sprite.Group(), grass=pygame.sprite.Group(), barrier=pygame.sprite.Group()):
         super().__init__()
 
@@ -54,7 +54,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.y = block.rect.top
 
 
-class Wall(pygame.sprite.Sprite):
+class Wall(pygame.sprite.Sprite):  # класс стен
     def __init__(self, x, y, img):
         super().__init__()
         self.image = pygame.image.load(img).convert_alpha()
@@ -63,7 +63,7 @@ class Wall(pygame.sprite.Sprite):
         self.rect.y = y
 
 
-class Camera:
+class Camera:  # класс камеры
     # зададим начальный сдвиг камеры
     def __init__(self):
         self.dx = 0
@@ -77,7 +77,7 @@ class Camera:
         self.dx = -(target.rect.x + target.rect.w // 2 - 900 // 2)
 
 
-class Fire(pygame.sprite.Sprite):
+class Fire(pygame.sprite.Sprite):  # класс огня
     def __init__(self):
         super().__init__()
 

@@ -1,10 +1,18 @@
 import pygame
+from screeninfo import get_monitors
 
-from level_2 import Communalka
+from level_2 import Communalka  # импортировать классы уровней
 from level_1 import Hostel
 from level_3 import Hotel
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
+
+for m in get_monitors():  # получить параметры экрана
+    replace_x = m.width / 1600
+    replace_y = m.height / 900
+
+# New width and height will be (50, 30).
+start = pygame.transform.scale(pygame.image.load("меню,кнопки/обложка.jpg"), (1600 * replace_x, 1100 * replace_y))
 
 pygame.init()
 pygame.mixer.music.load("меню,кнопки/фоновая.mp3")
@@ -17,6 +25,7 @@ but_sound = pygame.mixer.Sound("меню,кнопки/кнопка.wav")
 pygame.display.set_caption('Геннадий_вход передает привет')
 
 
+# функция, печатающая текст на экране
 def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
                font_type="меню,кнопки/a ConceptoTitulRough.ttf"):
     font_type = pygame.font.Font(font_type, font_size)
@@ -24,15 +33,13 @@ def print_text(message, x, y, font_size=30, font_color=(255, 255, 255),
     game.blit(text, (x, y))
 
 
-start = pygame.image.load("меню,кнопки/обложка.jpg")
-menu_img = pygame.image.load("меню,кнопки/меню.jpg")
-game.blit(start, (0, -80))
-print_text("Для перехода в меню нажмите любую клавишу", 450, 50)
+game.blit(start, (0, -80 * replace_y))
+print_text("Для перехода в меню нажмите любую клавишу", 450 * replace_x, 50 * replace_y)
 pygame.display.update()
 win = True
 
 
-class Picture_button():
+class Picture_button():  # класс кнопок с изображением
     def draw(self, inactive, active, x, y, message, action):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -44,15 +51,15 @@ class Picture_button():
                 but_sound.play()
                 if action == 1:
                     gaming1.entry(True)
-                    pygame.time.delay(100)
+                    pygame.time.delay(300)
                     menu(True)
                 if action == 2:
                     gaming2.start_level(True)
-                    pygame.time.delay(100)
+                    pygame.time.delay(300)
                     menu(True)
                 if action == 3:
                     gaming3.game_child(True)
-                    pygame.time.delay(100)
+                    pygame.time.delay(300)
                     menu(True)
         else:
             game.blit(inactive, (x, y))
@@ -60,7 +67,7 @@ class Picture_button():
             pygame.display.update()
 
 
-class Button():
+class Button():  # класс кнопки выхода
     def __init__(self):
         self.inactive = pygame.image.load("меню,кнопки/кнопка_овал.png")
         self.active = pygame.image.load("меню,кнопки/кнопкаlight_овал.png")
@@ -89,16 +96,18 @@ gaming2 = Communalka()
 gaming3 = Hotel()
 
 
-def menu(win):
+def menu(win):  # функция меню
     pygame.mouse.set_visible(True)
-    game.blit(menu_img, (0, -80))
+    game.blit((pygame.transform.scale(pygame.image.load("меню,кнопки/меню.jpg"),
+                                      (1600 * replace_x, 1100 * replace_y))), (0, -80 * replace_x))
     pygame.display.update()
     while win:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pass
         win = button_exit.draw(750, 800, 800, 850)
-        picture_botton.draw(pygame.image.load("меню,кнопки/меню_коммуналка.jpg"),
+        picture_botton.draw(pygame.transform.scale(pygame.image.load("меню,кнопки/меню_коммуналка.jpg"),
+                                                    (400 * replace_x, 400 * replace_y)),
                             pygame.image.load("меню,кнопки/меню_lightкоммуналка.png"), 600, 200,
                             "коммуналка", 2)
         picture_botton.draw(pygame.image.load("меню,кнопки/меню_общежитие.png"),
@@ -107,7 +116,7 @@ def menu(win):
                             pygame.image.load("меню,кнопки/меню_lightгостиница.png"), 1100, 200, "гостиница", 3)
 
 
-while win:
+while win:  # приветственный экран
     pygame.mouse.set_visible(False)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
