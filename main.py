@@ -58,7 +58,7 @@ class Picture_button():  # класс кнопок с изображением
                     pygame.time.delay(300)
                     menu(True)
                 if action == 3:
-                    gaming3.game_child(True)
+                    gaming3.hall(True)
                     pygame.time.delay(300)
                     menu(True)
         else:
