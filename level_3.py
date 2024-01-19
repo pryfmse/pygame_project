@@ -1,5 +1,4 @@
 import pygame
-from game_child import Player, Wall, Camera, Fire
 
 pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
@@ -61,9 +60,6 @@ class Picture_button():  # класс кнопки с изображением
 
 button_exit = Button()
 button_choise = Picture_button()
-all_sprites = pygame.sprite.Group()
-barrier_group = pygame.sprite.Group()
-wall_group = pygame.sprite.Group()
 
 
 class Hotel():  # главный класс уровня
@@ -100,71 +96,6 @@ class Hotel():  # главный класс уровня
                 win = False
 
             pygame.display.update()
-
-    def game_child(self, win):  # мини-игра "погоня"
-        game.blit(pygame.image.load("level_3/game_child/bg.png"), (0, 0))
-        game.blit(pygame.image.load("level_3/game_child/bg2.png"), (0, 100))
-        FPS = 30
-        clock = pygame.time.Clock()
-        pygame.display.update()
-
-        grass = Wall(820, 350, "level_3/game_child/2_трава.png")
-        wall_group.add(grass)
-        camera = Camera()
-        all_sprites.add(grass)
-        fl = Wall(-350, 684, "level_3/game_child/1.1.png")
-        # fl = Wall(-350, 350, "level_3/game_childe_child/1.2.png")
-        wall_group.add(fl)
-        all_sprites.add(fl)
-        fl = Wall(1210, 242, "level_3/game_child/3.png")
-        wall_group.add(grass)
-        all_sprites.add(fl)
-        player = Player(100, 690, wall_group)
-        all_sprites.add(player)
-
-        pygame.time.get_ticks()
-
-        while win:
-            game.blit(pygame.image.load("level_3/game_child/bg.png"), (0, 0))
-            game.blit(pygame.image.load("level_3/game_child/bg2.png"), (0, 100))
-
-            print_text(f'{(60000 - pygame.time.get_ticks()) / 1000}', 20, 20)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    win = False
-
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        player.change_x = -30
-                    if event.key == pygame.K_RIGHT:
-                        player.change_x = 30
-                    if event.key == pygame.K_UP:
-                        player.change_y = -30
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT:
-                        player.change_x = 0
-                    if event.key == pygame.K_RIGHT:
-                        player.change_x = 0
-                    if event.key == pygame.K_UP:
-                        player.change_y = 0
-
-            if player.alive:
-                # изменяем ракурс камеры
-                camera.update(player)
-                # обновляем положение всех спрайтов
-                for sprite in all_sprites:
-                    camera.apply(sprite)
-                all_sprites.update()
-                all_sprites.draw(game)
-            else:
-                player.alive = True
-                player.rect.x = 130
-                player.rect.y = 690
-
-            win = button_exit.draw(750, 800, 800, 850)
-
-            pygame.display.flip()
-            clock.tick(FPS)
 
     def hall3(self, win):  # третий раз в коридоре
         while win:
